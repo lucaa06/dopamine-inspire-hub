@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,23 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				dopamine: {
+					blue: '#3B82F6',
+					lightBlue: '#60A5FA',
+					green: '#10B981',
+					lightGreen: '#34D399',
+					orange: '#F59E0B',
+					lightOrange: '#FBBF24',
+					purple: '#8B5CF6',
+					lightPurple: '#A78BFA',
+					pink: '#EC4899',
+					lightPink: '#F472B6'
 				}
+			},
+			backgroundImage: {
+				'gradient-positive': 'linear-gradient(135deg, #60A5FA 0%, #34D399 50%, #FBBF24 100%)',
+				'gradient-gentle': 'linear-gradient(135deg, #F8FAFC 0%, #E0F2FE 100%)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +101,40 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'bounce-gentle': {
+					'0%, 100%': {
+						transform: 'translateY(0)',
+					},
+					'50%': {
+						transform: 'translateY(-10px)',
+					}
+				},
+				'pulse-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 5px rgba(59, 130, 246, 0.3)',
+					},
+					'50%': {
+						boxShadow: '0 0 20px rgba(59, 130, 246, 0.6)',
+					}
+				},
+				'fade-in-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'bounce-gentle': 'bounce-gentle 2s infinite',
+				'pulse-glow': 'pulse-glow 2s infinite',
+				'fade-in-up': 'fade-in-up 0.5s ease-out',
 			}
 		}
 	},
