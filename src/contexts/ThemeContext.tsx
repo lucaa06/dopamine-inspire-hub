@@ -12,6 +12,14 @@ interface ThemeContextType {
   };
   updateCustomColor: (key: string, color: string) => void;
   resetColors: () => void;
+  applyColors: () => void;
+  pendingColors: {
+    primary: string;
+    secondary: string;
+    accent: string;
+    background: string;
+  };
+  updatePendingColor: (key: string, color: string) => void;
 }
 
 const defaultColors = {
@@ -26,13 +34,18 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(false);
   const [customColors, setCustomColors] = useState(defaultColors);
+  const [pendingColors, setPendingColors] = useState(defaultColors);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('dopamine-theme');
     const savedColors = localStorage.getItem('dopamine-colors');
     
     if (savedTheme) setIsDark(savedTheme === 'dark');
-    if (savedColors) setCustomColors(JSON.parse(savedColors));
+    if (savedColors) {
+      const colors = JSON.parse(savedColors);
+      setCustomColors(colors);
+      setPendingColors(colors);
+    }
   }, []);
 
   useEffect(() => {
@@ -55,8 +68,18 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem('dopamine-colors', JSON.stringify(newColors));
   };
 
+  const updatePendingColor = (key: string, color: string) => {
+    setPendingColors(prev => ({ ...prev, [key]: color }));
+  };
+
+  const applyColors = () => {
+    setCustomColors(pendingColors);
+    localStorage.setItem('dopamine-colors', JSON.stringify(pendingColors));
+  };
+
   const resetColors = () => {
     setCustomColors(defaultColors);
+    setPendingColors(defaultColors);
     localStorage.removeItem('dopamine-colors');
   };
 
@@ -66,7 +89,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       toggleDark,
       customColors,
       updateCustomColor,
-      resetColors
+      resetColors,
+      applyColors,
+      pendingColors,
+      updatePendingColor
     }}>
       {children}
     </ThemeContext.Provider>
