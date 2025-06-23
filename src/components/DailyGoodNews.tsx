@@ -36,7 +36,6 @@ const DailyGoodNews = () => {
   const { language } = useLanguage();
 
   useEffect(() => {
-    // Get today's news based on date
     const today = new Date();
     const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
     const newsArray = goodNewsData[language as keyof typeof goodNewsData] || goodNewsData.en;
@@ -56,32 +55,41 @@ const DailyGoodNews = () => {
 
   return (
     <div className="mb-8 mx-auto max-w-4xl">
-      <div className="bg-gradient-to-r from-yellow-100 via-orange-100 to-pink-100 dark:from-yellow-900/30 dark:via-orange-900/30 dark:to-pink-900/30 border-l-4 border-yellow-500 p-6 rounded-lg shadow-lg animate-fade-in-up">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center mb-3">
-            <Sparkles className="text-yellow-600 dark:text-yellow-400 mr-2 animate-pulse" size={24} />
-            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-              {t('dailyGoodNews')}
-            </h2>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={refreshNews}
-            className="text-yellow-600 hover:text-yellow-700 dark:text-yellow-400"
-          >
-            <RefreshCw size={18} className={isAnimating ? 'animate-spin' : ''} />
-          </Button>
+      <div className="bg-gradient-to-r from-amber-200 via-yellow-200 to-orange-200 dark:from-amber-800/50 dark:via-yellow-800/50 dark:to-orange-800/50 border-l-4 border-yellow-500 p-8 rounded-2xl shadow-2xl animate-fade-in-up relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-4 right-4 text-6xl">✨</div>
+          <div className="absolute bottom-4 left-4 text-4xl">🌟</div>
+          <div className="absolute top-1/2 left-1/4 text-3xl">💫</div>
         </div>
         
-        <p className={`text-gray-700 dark:text-gray-200 text-lg leading-relaxed font-medium transition-all duration-300 ${
-          isAnimating ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'
-        }`}>
-          {currentNews}
-        </p>
-        
-        <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-          ✨ Una nuova buona notizia ogni giorno per iniziare con il sorriso!
+        <div className="relative z-10">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center">
+              <Sparkles className="text-yellow-700 dark:text-yellow-300 mr-3 animate-pulse" size={28} />
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 drop-shadow-sm">
+                {t('dailyGoodNews')}
+              </h2>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={refreshNews}
+              className="text-yellow-700 hover:text-yellow-800 dark:text-yellow-300 hover:bg-yellow-300/20 dark:hover:bg-yellow-700/20"
+            >
+              <RefreshCw size={20} className={isAnimating ? 'animate-spin' : ''} />
+            </Button>
+          </div>
+          
+          <p className={`text-gray-900 dark:text-gray-100 text-xl leading-relaxed font-semibold mb-4 drop-shadow-sm transition-all duration-300 ${
+            isAnimating ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'
+          }`}>
+            {currentNews}
+          </p>
+          
+          <div className="text-sm text-gray-800 dark:text-gray-200 font-medium bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm rounded-lg p-3 inline-block">
+            ✨ Una nuova buona notizia ogni giorno per iniziare con il sorriso!
+          </div>
         </div>
       </div>
     </div>
