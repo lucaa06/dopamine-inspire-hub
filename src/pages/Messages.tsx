@@ -50,13 +50,15 @@ const Messages = () => {
     { id: 3, sender: 'Anna Bianchi', message: 'I would love to get involved. Do you have more details?', time: '10:35 AM', isOwn: false },
     { id: 4, sender: 'You', message: 'Absolutely! They meet every Saturday at 9 AM in the central park', time: '10:37 AM', isOwn: true },
     { id: 5, sender: 'Anna Bianchi', message: 'That story about the rescued cat was so heartwarming! 🐱', time: '10:45 AM', isOwn: false },
+    { id: 6, sender: 'You', message: 'I know right! It really made my day better', time: '10:47 AM', isOwn: true },
+    { id: 7, sender: 'Anna Bianchi', message: 'We should definitely share more positive stories like this', time: '10:50 AM', isOwn: false },
+    { id: 8, sender: 'You', message: 'Absolutely! The world needs more good news', time: '10:52 AM', isOwn: true },
   ];
 
   const selectedConversation = conversations.find(c => c.id === selectedChat);
 
   const sendMessage = () => {
     if (newMessage.trim()) {
-      // In a real app, this would send the message
       console.log('Sending message:', newMessage);
       setNewMessage('');
     }
@@ -69,16 +71,22 @@ const Messages = () => {
       
       <main className="container mx-auto px-4 py-8 ml-16">
         <div className="max-w-6xl mx-auto">
+          {/* Greeting */}
+          <div className="mb-6">
+            <h1 className="text-2xl font-semibold text-black dark:text-white mb-2">
+              Hello "nickname" 👋
+            </h1>
+          </div>
+
           <div className="flex items-center space-x-3 mb-6">
             <MessageCircle className="text-blue-500" size={32} />
-            <h1 className="text-3xl font-bold gradient-text">Messages</h1>
+            <h1 className="text-3xl font-bold text-black dark:text-white">Messages</h1>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
             {/* Conversations List */}
             <Card className="glass-card border-0 lg:col-span-1">
               <CardContent className="p-0 h-full flex flex-col">
-                {/* Search */}
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -89,7 +97,6 @@ const Messages = () => {
                   </div>
                 </div>
 
-                {/* Conversations */}
                 <div className="flex-1 overflow-y-auto">
                   {conversations.map((conversation) => (
                     <div
@@ -132,7 +139,6 @@ const Messages = () => {
             {/* Chat Area */}
             <Card className="glass-card border-0 lg:col-span-2">
               <CardContent className="p-0 h-full flex flex-col">
-                {/* Chat Header */}
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
@@ -158,8 +164,7 @@ const Messages = () => {
                   </div>
                 </div>
 
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[400px]">
                   {messages.map((message) => (
                     <div
                       key={message.id}
@@ -181,7 +186,6 @@ const Messages = () => {
                   ))}
                 </div>
 
-                {/* Message Input */}
                 <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center space-x-3">
                     <Input

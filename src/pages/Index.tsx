@@ -17,7 +17,7 @@ const Index = () => {
       <main className="container mx-auto px-4 py-8 ml-16">
         {/* Welcome Message */}
         <div className="text-center mb-8 animate-fade-in-up">
-          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-dopamine-blue via-dopamine-purple to-dopamine-green bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold mb-4 text-black dark:text-white">
             {t('welcomeMessage')}
           </h2>
         </div>

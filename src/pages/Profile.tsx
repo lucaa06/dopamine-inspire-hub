@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
-import { User, Camera, Edit3, MapPin, Calendar, Heart, Trophy, Star } from 'lucide-react';
+import { User, Camera, MapPin, Calendar, Mail, Phone, Edit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import VerticalSidebar from '@/components/VerticalSidebar';
@@ -11,18 +13,19 @@ import VerticalSidebar from '@/components/VerticalSidebar';
 const Profile = () => {
   const { t } = useLanguage();
   const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phone: '+1 (555) 123-4567',
+    location: 'New York, NY',
+    bio: 'Passionate about spreading positivity and making the world a better place through random acts of kindness.',
+    joinDate: 'January 2024',
+  });
 
-  const userStats = [
-    { label: 'Good News Shared', value: 42, icon: Heart, color: 'text-red-500' },
-    { label: 'People Inspired', value: 1247, icon: Star, color: 'text-yellow-500' },
-    { label: 'Kindness Points', value: 3856, icon: Trophy, color: 'text-blue-500' },
-  ];
-
-  const achievements = [
-    { name: 'First Share', description: 'Shared your first good news!', earned: true },
-    { name: 'Inspiration Master', description: 'Inspired 1000+ people', earned: true },
-    { name: 'Daily Sharer', description: 'Shared good news for 30 days straight', earned: false },
-  ];
+  const handleSave = () => {
+    setIsEditing(false);
+    console.log('Profile saved:', profile);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900">
@@ -30,94 +33,152 @@ const Profile = () => {
       <VerticalSidebar />
       
       <main className="container mx-auto px-4 py-8 ml-16">
-        <div className="max-w-4xl mx-auto space-y-6">
-          {/* Profile Header */}
-          <Card className="glass-card border-0 animate-slide-in-up">
-            <CardContent className="p-8">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-6">
-                  <div className="relative">
-                    <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                      <User size={48} className="text-white" />
-                    </div>
-                    <Button
-                      size="icon"
-                      className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-white dark:bg-gray-800 border-2 border-white dark:border-gray-800"
-                    >
-                      <Camera size={16} />
-                    </Button>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <h1 className="text-3xl font-bold gradient-text">Marco Rossi</h1>
-                    <p className="text-gray-600 dark:text-gray-300">Spreading positivity, one story at a time ✨</p>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <div className="flex items-center space-x-1">
-                        <MapPin size={16} />
-                        <span>Milano, Italy</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Calendar size={16} />
-                        <span>Joined March 2024</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <Button
-                  variant="outline"
-                  onClick={() => setIsEditing(!isEditing)}
-                  className="flex items-center space-x-2"
-                >
-                  <Edit3 size={16} />
-                  <span>Edit Profile</span>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {userStats.map((stat, index) => (
-              <Card key={index} className="glass-card border-0 animate-slide-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                <CardContent className="p-6 text-center">
-                  <stat.icon size={32} className={`mx-auto mb-3 ${stat.color}`} />
-                  <div className="text-2xl font-bold gradient-text">{stat.value.toLocaleString()}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">{stat.label}</div>
-                </CardContent>
-              </Card>
-            ))}
+        <div className="max-w-4xl mx-auto">
+          {/* Greeting */}
+          <div className="mb-6">
+            <h1 className="text-2xl font-semibold text-black dark:text-white mb-2">
+              Hello "nickname" 👋
+            </h1>
           </div>
 
-          {/* Achievements */}
-          <Card className="glass-card border-0 animate-slide-in-up">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Trophy className="text-yellow-500" />
-                <span>Achievements</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {achievements.map((achievement, index) => (
-                  <div
-                    key={index}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      achievement.earned
-                        ? 'border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20'
-                        : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50'
-                    }`}
+          <div className="flex items-center space-x-3 mb-6">
+            <User className="text-blue-500" size={32} />
+            <h1 className="text-3xl font-bold text-black dark:text-white">Profile</h1>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Profile Card */}
+            <Card className="glass-card border-0 lg:col-span-2">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xl text-black dark:text-white">Personal Information</CardTitle>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+                    className="border-blue-500 text-blue-500 hover:bg-blue-50"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold">{achievement.name}</h3>
-                      {achievement.earned && <Badge className="bg-yellow-500">Earned</Badge>}
+                    <Edit size={16} className="mr-2" />
+                    {isEditing ? 'Save' : 'Edit'}
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Profile Picture */}
+                <div className="flex items-center space-x-4">
+                  <div className="relative">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                      JD
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{achievement.description}</p>
+                    {isEditing && (
+                      <Button size="icon" className="absolute -bottom-2 -right-2 rounded-full bg-blue-500 hover:bg-blue-600">
+                        <Camera size={16} />
+                      </Button>
+                    )}
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  <div>
+                    <h3 className="text-lg font-semibold text-black dark:text-white">{profile.name}</h3>
+                    <p className="text-gray-600 dark:text-gray-300">Member since {profile.joinDate}</p>
+                  </div>
+                </div>
+
+                {/* Form Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name" className="text-black dark:text-white">Full Name</Label>
+                    {isEditing ? (
+                      <Input
+                        id="name"
+                        value={profile.name}
+                        onChange={(e) => setProfile(prev => ({ ...prev, name: e.target.value }))}
+                        className="mt-1"
+                      />
+                    ) : (
+                      <p className="mt-1 p-2 bg-gray-50 dark:bg-gray-800 rounded text-black dark:text-white">{profile.name}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="email" className="text-black dark:text-white">Email</Label>
+                    {isEditing ? (
+                      <Input
+                        id="email"
+                        type="email"
+                        value={profile.email}
+                        onChange={(e) => setProfile(prev => ({ ...prev, email: e.target.value }))}
+                        className="mt-1"
+                      />
+                    ) : (
+                      <p className="mt-1 p-2 bg-gray-50 dark:bg-gray-800 rounded text-black dark:text-white">{profile.email}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="phone" className="text-black dark:text-white">Phone</Label>
+                    {isEditing ? (
+                      <Input
+                        id="phone"
+                        value={profile.phone}
+                        onChange={(e) => setProfile(prev => ({ ...prev, phone: e.target.value }))}
+                        className="mt-1"
+                      />
+                    ) : (
+                      <p className="mt-1 p-2 bg-gray-50 dark:bg-gray-800 rounded text-black dark:text-white">{profile.phone}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="location" className="text-black dark:text-white">Location</Label>
+                    {isEditing ? (
+                      <Input
+                        id="location"
+                        value={profile.location}
+                        onChange={(e) => setProfile(prev => ({ ...prev, location: e.target.value }))}
+                        className="mt-1"
+                      />
+                    ) : (
+                      <p className="mt-1 p-2 bg-gray-50 dark:bg-gray-800 rounded text-black dark:text-white">{profile.location}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="bio" className="text-black dark:text-white">Bio</Label>
+                  {isEditing ? (
+                    <Textarea
+                      id="bio"
+                      value={profile.bio}
+                      onChange={(e) => setProfile(prev => ({ ...prev, bio: e.target.value }))}
+                      className="mt-1 min-h-[100px]"
+                    />
+                  ) : (
+                    <p className="mt-1 p-2 bg-gray-50 dark:bg-gray-800 rounded text-black dark:text-white">{profile.bio}</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Stats Card */}
+            <Card className="glass-card border-0">
+              <CardHeader>
+                <CardTitle className="text-xl text-black dark:text-white">Your Impact</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">156</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">People Inspired</div>
+                </div>
+                <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">23</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Good News Shared</div>
+                </div>
+                <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <div className="text-2xl font-bold text-purple-600">2,847</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Positive Points</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </main>
     </div>
